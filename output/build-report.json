@@ -1,9 +1,0 @@
-{
-  "ok": true,
-  "layoutErrors": 0,
-  "renderer": "Playwright Chromium",
-  "pdf": "resume-fintech.pdf",
-  "bytes": 1036252,
-  "profile": "fintech",
-  "pages": 2
-}
