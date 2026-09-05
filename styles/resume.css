@@ -1,0 +1,93 @@
+:root {
+  --page-w: 210mm;
+  --page-h: 297mm;
+  --blue: #4183ff;
+  --tag-blue: #508cff;
+  --tag-bg: #e9f1ff;
+  --ink: #111;
+  --side: 7.94mm; /* 22.5 pt */
+  --body-size: 9pt;
+  --body-leading: 1.12;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #e9edf3; }
+body {
+  font-family: "Noto Sans CJK SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+.pages { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 12px 0; }
+.page {
+  width: var(--page-w);
+  height: var(--page-h);
+  position: relative;
+  background: #fff;
+  overflow: hidden;
+}
+.top-stripe { position: absolute; inset: 0 0 auto 0; height: 4.23mm; background: var(--blue); }
+.header { position: absolute; inset: 0; }
+.name { position: absolute; top: 34.38pt; left: 0; width: 100%; text-align: center; font-size: 15pt; line-height: 1; font-weight: 700; }
+.header-line { position: absolute; left: 41mm; width: 116mm; text-align: center; font-size: 9pt; line-height: 1; white-space: nowrap; }
+.header-line.contact { top: 57.98pt; }
+.header-line.portfolio { top: 68.48pt; }
+.header-line.address { top: 78.23pt; }
+.header-line.status { top: 87.23pt; }
+.portrait { position: absolute; left: 181.24mm; top: 6.88mm; width: 21.17mm; height: 25.4mm; object-fit: cover; }
+.page1-content {
+  position: absolute;
+  top: 40.48mm;
+  right: var(--side);
+  bottom: 0;
+  left: var(--side);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2mm;
+}
+.section { flex: 0 0 auto; }
+.section-title { position: relative; height: 5.1mm; border-bottom: .265mm solid var(--blue); color: var(--blue); font-size: 10.4pt; font-weight: 700; line-height: 4.5mm; }
+.section-body { padding-top: 1.1mm; font-size: var(--body-size); line-height: var(--body-leading); }
+.row-head { display: grid; grid-template-columns: 1fr 38mm; align-items: baseline; min-height: 3.55mm; }
+.row-head .left { min-width: 0; }
+.row-head .date { text-align: right; white-space: nowrap; font-size: 8.3pt; }
+.school, .company, .project-name { font-weight: 700; font-size: 8.75pt; }
+.tag { display: inline-block; margin-left: 1.1mm; padding: .1mm 1.25mm .22mm; border-radius: 0; background: var(--tag-bg); color: var(--tag-blue); font-weight: 400; font-size: 8.0pt; line-height: 3.2mm; vertical-align: .15mm; }
+.subrow { display: grid; grid-template-columns: 1fr 12mm; min-height: 3.4mm; }
+.subrow .city { text-align: right; white-space: nowrap; }
+.detail, .skill-row, .intro, .link-row, .stack-row { margin: 0; }
+.detail strong, .skill-row strong { font-weight: 700; }
+.edu-item { margin-bottom: .85mm; }
+.edu-item:nth-child(2) { margin-bottom: .45mm; }
+/* Phase 2 calibration: match the approved Figma/PDF vertical rhythm while using Noto Sans SC. */
+.education .row-head { min-height: 5.30mm; }
+.education .subrow { min-height: 4.23mm; }
+.education .detail { line-height: 1.25; }
+.education .edu-item,
+.education .edu-item:nth-child(2) { margin-bottom: 0; }
+.skills .section-body { line-height: 1.10; }
+.experience .section-body { line-height: 1.16; }
+.skill-row { margin-bottom: .78mm; }
+.skill-row:last-child { margin-bottom: 0; }
+.exp-item { margin-bottom: 1.35mm; }
+.exp-item.compact { margin-bottom: 1.0mm; }
+.bullets { margin: .25mm 0 0; padding: 0 0 0 4.6mm; }
+.bullets li { margin: 0 0 .55mm; padding-left: .55mm; }
+.bullets li::marker { font-size: 6.3pt; }
+.page2 { padding: 7.0mm var(--side) 0; font-size: 9pt; line-height: 1.08; }
+.page2 .continuation { margin: 0 0 3.0mm; }
+.page2 .section-title { margin: 0 0 1.2mm; height: 5.0mm; }
+.project { margin-bottom: 1.5mm; }
+.project .row-head { grid-template-columns: 1fr 43mm; }
+.project-name { font-size: 9.25pt; }
+.page2 .date { font-size: 8.9pt; }
+.page2 .link-row, .page2 .stack-row, .page2 .intro { font-size: 8.9pt; }
+.page2 .bullets { font-size: 8.8pt; padding-left: 5.2mm; margin-top: .35mm; }
+.page2 .bullets li { margin-bottom: .45mm; }
+.layout-error { outline: 1px solid #f00 !important; }
+@media print {
+  html, body { background: #fff; }
+  .pages { display: block; padding: 0; }
+  .page { break-after: page; page-break-after: always; }
+  .page:last-child { break-after: auto; page-break-after: auto; }
+  @page { size: A4; margin: 0; }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "resume-generator-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Locked WonderCV-style resume generator foundation",
+  "scripts": {
+    "test": "node --test --experimental-strip-types tests/resume.test.ts",
+    "schema:check": "node --experimental-strip-types scripts/check-schema.ts",
+    "build:resume": "node --experimental-strip-types scripts/build.ts",
+    "check:layout": "node --experimental-strip-types scripts/check-layout.ts",
+    "visual:check": "node --experimental-strip-types scripts/visual-check.ts",
+    "repeatability:check": "node --experimental-strip-types scripts/check-repeatability.ts",
+    "design:check": "node --experimental-strip-types scripts/design-lock.ts check",
+    "design:approve": "node --experimental-strip-types scripts/design-lock.ts approve",
+    "verify": "npm test && npm run design:check && npm run schema:check && npm run build:resume && npm run check:layout && npm run repeatability:check && npm run visual:check"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "type": "module",
+  "dependencies": {
+    "yaml": "^2.9.0",
+    "zod": "^4.5.4"
+  }
+}

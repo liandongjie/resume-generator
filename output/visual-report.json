@@ -1,0 +1,12 @@
+{
+  "reference": "wondercv-reference-page1.png",
+  "generated": "resume-fintech.pdf",
+  "size": [
+    1192,
+    1686
+  ],
+  "mae_0_255": 37.405,
+  "rms_0_255": 80.541,
+  "hardGate": false,
+  "note": "Metric is diagnostic only because Noto Sans CJK SC is intentionally used instead of Microsoft YaHei."
+}

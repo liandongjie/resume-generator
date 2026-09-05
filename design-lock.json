@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "algorithm": "sha256",
+  "files": {
+    "template/resume.html": "51b715608f477b4e8a3b3a3891cc76eebb80feb3aee2ea67e645bb07506fd906",
+    "styles/resume.css": "9f97b276eb01a63fd7e0b4255fdaffe659a972e50e2b6473c2b0412c710e8c17"
+  }
+}

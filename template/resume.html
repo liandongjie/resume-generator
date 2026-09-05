@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{{TITLE}}</title>
+<link rel="stylesheet" href="../styles/resume.css" />
+</head>
+<body data-layout-errors="pending">
+<div class="pages">
+  {{PAGES}}
+</div>
+<script>
+(() => {
+  const pages = [...document.querySelectorAll('.page')];
+  const issues = [];
+  for (const page of pages) {
+    const pr = page.getBoundingClientRect();
+    for (const child of [...page.querySelectorAll('[data-guard]')]) {
+      const r = child.getBoundingClientRect();
+      if (r.bottom > pr.bottom + 0.5 || r.right > pr.right + 0.5 || r.left < pr.left - 0.5 || r.top < pr.top - 0.5) {
+        issues.push(`${page.dataset.page}:${child.dataset.guard || child.className}`);
+        child.classList.add('layout-error');
+      }
+    }
+  }
+  const sections = [...document.querySelectorAll('.page1-content > .section')];
+  for (let i = 1; i < sections.length; i++) {
+    const previous = sections[i - 1];
+    const current = sections[i];
+    const gap = current.getBoundingClientRect().top - previous.getBoundingClientRect().bottom;
+    const pair = `${previous.classList[1]}->${current.classList[1]}`;
+    if (gap < -0.5) issues.push(`section-overlap:${pair}`);
+    if (gap > 12) issues.push(`section-gap-too-large:${pair}:${gap.toFixed(1)}px`);
+  }
+  const status = document.querySelector('.header-line.status');
+  const education = sections[0];
+  if (status && education) {
+    const gap = education.getBoundingClientRect().top - status.getBoundingClientRect().bottom;
+    if (gap < -0.5) issues.push('section-overlap:header->education');
+    if (gap > 30) issues.push(`section-gap-too-large:header->education:${gap.toFixed(1)}px`);
+  }
+  const content = document.querySelector('.page1-content');
+  const lastSection = sections.at(-1);
+  if (content && lastSection && lastSection.getBoundingClientRect().bottom > content.getBoundingClientRect().bottom + 0.5) {
+    issues.push('page-overflow:1:page1-content');
+  }
+  document.body.dataset.layoutErrors = String(issues.length);
+  document.body.dataset.layoutIssueList = issues.join('|');
+})();
+</script>
+</body>
+</html>
