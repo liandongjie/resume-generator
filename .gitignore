@@ -1,0 +1,22 @@
+# Node
+node_modules/
+
+# Temporary rendering files
+tmp/
+
+# Generated outputs
+output/
+
+# Environment
+.env
+.env.*
+
+# Python cache
+__pycache__/
+*.pyc
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
