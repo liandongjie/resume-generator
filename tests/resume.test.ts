@@ -15,9 +15,11 @@ const fixture = {
   projects: [{ name: '项目', date: '2025年08月 - 2025年11月', links: ['GitHub：https://example.com/repo'], stack: 'TypeScript', intro: '简介', bullets: ['完成项目'] }]
 };
 
-test('current resume.yaml passes ResumeSchema', () => {
-  const resume = loadResume(path.resolve(import.meta.dirname, '..', 'data', 'resume.yaml'));
-  assert.equal(resume.meta.profile, 'fintech');
+test('base resumes pass ResumeSchema', () => {
+  for (const [file, profile] of [['base-fintech.yaml', 'fintech'], ['base-fullstack.yaml', 'fullstack']]) {
+    const resume = loadResume(path.resolve(import.meta.dirname, '..', 'data', file));
+    assert.equal(resume.meta.profile, profile);
+  }
 });
 
 test('missing required field reports its path', () => {

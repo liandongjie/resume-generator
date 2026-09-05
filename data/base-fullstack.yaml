@@ -1,0 +1,111 @@
+meta:
+    profile: fullstack
+    version: phase3-base
+    visualSource: 连冬杰_全栈.pdf
+
+profile:
+    name: 连冬杰
+    phone: '19801296231'
+    email: 502022270071@smail.nju.edu.cn
+    city: 南京
+    portfolio: https://liandongjie.vercel.app/
+    address: 江苏省南京市栖霞区仙林大道163号南大仙林校区
+    status: 应届毕业生 | 全栈开发
+    portrait: assets/portrait.png
+
+education:
+    - school: 南京大学
+      tags:
+          - '985'
+          - '211'
+          - 双一流
+          - C9
+      date: 2024年09月 - 2027年06月
+      degreeLine: 地图学与地理信息系统 硕士 地理与海洋科学学院 全日制
+      city: 南京
+      details:
+          - label: 学术研究：
+            text: 研究方向为遥感语义分割，发表SCI论文**1篇（一作）**、国家发明专利**3项**；获学业一等奖学金
+
+    - school: 中国农业大学
+      tags:
+          - '985'
+          - '211'
+          - 双一流
+      date: 2018年09月 - 2022年06月
+      degreeLine: 地理信息科学 本科 土地科学与技术学院 全日制
+      city: 北京
+      details:
+          - label: 专业成果：
+            text: '**GPA 3.74/4（排名4/35）**，发表SCI论文**1篇（一作）**，获软件著作权**2项**'
+          - label: 学生工作：
+            text: 担任学院分团委部门负责人、班级委员，负责多项志愿服务活动的策划与举办，覆盖人数超1000人
+          - label: 荣誉奖项：
+            text: 中国农业大学优秀毕业生、学习优秀一等奖学金；全国大学生英语竞赛一等奖（国家级）、全国大学生数学竞赛二等奖（国家级）、美赛Honorable Mention
+          - text: 2021年推免至南京大学地理与海洋科学学院；2022.09-2024.09服役于武警某部
+
+    - school: 中国农业大学
+      tags:
+          - '985'
+          - '211'
+          - 双一流
+      date: 2019年09月 - 2022年06月
+      degreeLine: 计算机科学与技术（双学位） 信息与电气工程学院
+      city: 北京
+      details:
+          - label: 辅修课程：
+            text: 数据结构、计算机网络、面向对象程序设计、数据库原理
+
+skills:
+    - label: 前端：
+      text: 掌握HTML、CSS、JS/TS，能完成响应式页面和复杂交互；熟悉React、Vue组件化开发，掌握路由、状态管理、表单和权限控制；具备RESTful API联调、异常处理和数据排查能力；熟悉Vite、Webpack、自动化测试与性能优化，可独立交付中后台模块。
+    - label: 后端：
+      text: 熟悉Java后端开发，理解Spring Boot、Spring MVC、MyBatis等企业级开发模式；掌握RESTful API设计、数据库表设计、复杂查询、事务处理和异常管理；能够将业务流程抽象为数据模型、状态流转、权限校验和接口逻辑，保障系统稳定性与数据一致性。同时熟悉Python/FastAPI开发，可根据业务场景完成后端服务设计、接口联调与功能交付。
+    - label: AI：
+      text: 熟悉使用 Codex、Claude Code等工具完成需求拆解、方案设计、编码与重构；能结合项目上下文编写清晰提示词，控制生成范围与实现边界；理解 Agent、MCP、Tool Calling 等机制，可将大模型接入业务流程；能通过 Git Diff、自动化测试、日志和人工验收校验结果，沉淀可复用规范。
+    - label: DevOps：
+      text: 熟悉Git分支协作，能基于GitLab CI/Jenkins配置构建、测试与代码检查；熟悉Docker、Nginx及环境变量配置，能完成项目部署；能结合Pipeline日志、应用日志和网络请求定位发布故障，完成回滚与上线验证；熟悉OSS、MinIO、Vercel、Railway等服务，具备交付能力。
+
+internships:
+    - company: 百度上海研发中心
+      date: 2025年08月 - 2025年11月
+      role: Web前端开发实习生 百度技术服务中台
+      city: 上海
+      intro: 参与百度内部 RPA 流程编排工具研发，围绕复杂流程控制、 通用指令与可视化编辑完成近 10 项需求迭代。
+      bullets:
+          - 设计并实现 continue / break 控制指令：将循环跳转语义抽象为可向父级传播的控制信号，由最近一层循环节点消费；针对单层、多层嵌套及条件分支设计 20+ 个场景用例，验证执行结果符合预期；基于节点层级与循环作用域完善前端拖拽规则，限制 continue / break 拖入循环外或跨作用域移出等非法操作，并补充非法位置交互提示。
+          - 实现 JS 脚本节点：基于 Monaco Editor 提供代码编辑与流程变量补全，并接入内置变量/API，使用户可直接编写脚本完成字段转换、数据加工等非标准化处理，减少为低频需求单独开发专用节点的成本。
+          - 参考 VS Code indent rainbow 插件的实现思路，为流程节点添加层级背景色，增强循环/条件等嵌套结构下的父子关系辨识，提升复杂流程的阅读和定位效率。
+
+    - company: Filmaction
+      date: 2026年04月 - 2026年06月
+      role: 全栈开发实习生
+      intro: 参与公司 AI 影视创作平台 建设，完成在线剪辑、内容审核、电商矩阵、字幕擦除等20+需求。
+      bullets:
+          - 参考剪映和火山引擎的视频剪辑方案，设计并实现浏览器端视频剪辑器，以统一时间线模型管理视频、配乐和旁白轨道，支持轨道拆分、裁剪、移动、复制粘贴、音频分离等 13 类编辑操作，并通过 MoviePy 完成视频合成与导出。
+          - 接入火山引擎多模态内容审核，将数美/火山收敛为统一审核接口，适配文本、图片、音频、视频 4 类内容及同步/异步差异，并补充动态轮询与日志脱敏。
+          - 设计并实现电商矩阵模块，支持表格导入、AI 脚本生成、视频派发与结果下载；针对批任务部分失败场景，补充扣费回滚和退款处理，避免任务失败后产生异常扣费。
+
+    - company: 生态环境部环境发展中心
+      date: 2021年10月 - 2022年03月
+      role: WebGIS全栈开发实习生 环境管理与数据应用研究所
+      city: 北京
+      bullets:
+          - 参与环境社会风险分析 WebGIS 系统从需求梳理到功能交付；系统支持风险点、在线绘制、坐标、地址/POI、行政区及 Shapefile 6 类研究区输入，覆盖点、线、矩形、多边形 4 类几何对象。
+          - 后端基于 GeoPandas、Rasterio、Shapely 实现缓冲区生成、栅格裁剪与自定义权重叠加，完成 12 项标准化环境、人口及社会指标综合风险计算，支持统计结果、GeoTIFF、Shapefile 及 ZIP 成果导出。
+          - 实现缓冲区内 POI 关键词检索、地图标注及 CSV 导出，参与功能测试与系统交付，编写 30 页操作文档；项目后续取得软件著作权（登记号：2023SR0620877）。
+
+projects:
+    - name: 环境社会风险分析 WebGIS 平台（ESR-Platform）｜全栈开发
+      date: 2021年10月 - 2022年03月
+      links:
+          - 在线访问：https://14.103.34.41:8081/
+          - GitHub开源：https://github.com/liandongjie/ESR-Platform-Next
+      stack: Vue3 + TypeScript + Flask + PostgreSQL/PostGIS + Redis + Celery + Rasterio + Docker
+      intro: 面向环境社会风险分析场景，构建“研究区选择—空间分析—风险计算—地图展示—成果下载”的 WebGIS 分析平台，支持 12 项环境、人口及社会指标综合评估。
+      bullets:
+          - 使用JWT和PostgreSQL/PostGIS实现多用户任务中心，持久化研究区、任务状态及成果信息，并按用户隔离任务查询、预览和下载权限。
+          - 将风险栅格校验从Python逐像元遍历改为NumPy布尔索引和向量化统计，百万像元级结果的校验中位耗时由 **974 ms降至6.4 ms，下降99.3%**。
+          - 将风险图由逐像元GeoJSON改为后端生成透明PNG、前端使用单个ImageLayer展示；现有确定性基准中，响应体由约 **4.97 MB降至15 KB**，地图对象由 **16,139个降至1个**。
+          - 使用Celery拆分Web请求与GIS计算，Redis负责队列、限流和提交幂等，并通过任务状态控制和定时补偿处理异常；50用户并发提交测试中，**50/50任务完成、HTTP错误率0%**，排队与执行p95分别为 **2.64秒和139 ms**。
+          - 使用Docker Compose、Caddy部署至火山引擎，并通过GitHub Actions执行测试、镜像构建和数据库迁移检查；针对服务器构建GIS镜像耗时过长的问题，改为本地构建、压缩上传和服务器离线加载。

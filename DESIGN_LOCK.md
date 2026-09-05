@@ -14,12 +14,12 @@ Locked by default:
 - date right column
 - tag appearance and bullet indentation
 
-JD-specific work may change resume data, ordering and wording only. Do not change `styles/resume.css` or `template/resume.html` unless the task is explicitly a template/layout change.
+JD-specific work may change temporary resume data, ordering and wording only. Do not change `styles/resume.css` or `template/resume.html` unless the task is explicitly a template/layout change.
 
 ## Change policy
 
-- Routine resume content updates must change `data/resume.yaml` only; they must not modify `template/` or `styles/`.
-- Future JD customization must remain in the data layer and must not bypass this lock.
+- `data/base-fintech.yaml` and `data/base-fullstack.yaml` are read-only Base resumes; routine JD work must copy one into `tmp/` and modify only the copy.
+- JD customization must remain in the temporary data layer and must not modify either Base, `template/`, or `styles/`.
 - Locked files may change only when a task explicitly requests a design-template change and the new rendering has been reviewed.
 
 ## Machine check

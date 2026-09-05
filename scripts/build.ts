@@ -1,10 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { parseArgs } from 'node:util';
 import { escapeHtml, loadResume, renderInline } from './resume-schema.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
-const DATA = path.join(ROOT, 'data', 'resume.yaml');
+const { values } = parseArgs({ options: { input: { type: 'string' } } });
+const DATA = path.resolve(ROOT, values.input || 'data/base-fintech.yaml');
+if (!DATA.startsWith(`${ROOT}${path.sep}`)) throw new Error(`Input must be inside the project: ${DATA}`);
 const TEMPLATE = path.join(ROOT, 'template', 'resume.html');
 const CSS = path.join(ROOT, 'styles', 'resume.css');
 const RENDERER = path.join(ROOT, 'scripts', 'render_pdf.py');
@@ -111,5 +114,5 @@ if (renderReport.errors !== 0) {
 if (renderReport.pages !== 2) throw new Error(`PDF page count must be 2, got ${renderReport.pages}`);
 if (!fs.existsSync(pdf) || fs.statSync(pdf).size < 10_000) throw new Error('PDF generation failed');
 fs.copyFileSync(htmlPath, path.join(OUT,'resume-fintech.html'));
-fs.writeFileSync(path.join(OUT,'build-report.json'), JSON.stringify({ok:true, layoutErrors:0, renderer:'Playwright Chromium', pdf:path.basename(pdf), bytes:fs.statSync(pdf).size, profile:data.meta.profile, pages:renderReport.pages}, null, 2));
+fs.writeFileSync(path.join(OUT,'build-report.json'), JSON.stringify({ok:true, input:path.relative(ROOT,DATA), layoutErrors:0, renderer:'Playwright Chromium', pdf:path.basename(pdf), bytes:fs.statSync(pdf).size, profile:data.meta.profile, pages:renderReport.pages}, null, 2));
 console.log(`OK: ${pdf}`);

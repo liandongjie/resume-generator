@@ -12,7 +12,9 @@
     "repeatability:check": "node --experimental-strip-types scripts/check-repeatability.ts",
     "design:check": "node --experimental-strip-types scripts/design-lock.ts check",
     "design:approve": "node --experimental-strip-types scripts/design-lock.ts approve",
-    "verify": "npm test && npm run design:check && npm run schema:check && npm run build:resume && npm run check:layout && npm run repeatability:check && npm run visual:check"
+    "verify": "node --experimental-strip-types scripts/verify-resume.ts",
+    "verify:resume": "node --experimental-strip-types scripts/verify-resume.ts",
+    "generate": "node --experimental-strip-types scripts/generate.ts"
   },
   "engines": {
     "node": ">=22"
