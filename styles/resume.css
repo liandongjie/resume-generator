@@ -17,13 +17,15 @@ body {
   -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
-.pages { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 12px 0; }
-.page {
+.resume-document {
   width: var(--page-w);
-  height: var(--page-h);
-  position: relative;
+  margin: 12px auto;
   background: #fff;
-  overflow: hidden;
+}
+.first-page-header {
+  position: relative;
+  width: var(--page-w);
+  height: 40.48mm;
 }
 .top-stripe { position: absolute; inset: 0 0 auto 0; height: 4.23mm; background: var(--blue); }
 .header { position: absolute; inset: 0; }
@@ -34,18 +36,21 @@ body {
 .header-line.address { top: 78.23pt; }
 .header-line.status { top: 87.23pt; }
 .portrait { position: absolute; left: 181.24mm; top: 6.88mm; width: 21.17mm; height: 25.4mm; object-fit: cover; }
-.page1-content {
-  position: absolute;
-  top: 40.48mm;
-  right: var(--side);
-  bottom: 0;
-  left: var(--side);
-  display: flex;
-  flex-direction: column;
-  gap: 1.2mm;
+.resume-flow { padding: 0 var(--side); display: block; }
+.resume-flow > .section { margin: 0 0 1.2mm; }
+.resume-flow > .section:last-child { margin-bottom: 0; }
+.section { break-inside: auto; }
+.section-title {
+  position: relative;
+  height: 5.1mm;
+  border-bottom: .265mm solid var(--blue);
+  color: var(--blue);
+  font-size: 10.4pt;
+  font-weight: 700;
+  line-height: 4.5mm;
+  break-after: avoid;
+  page-break-after: avoid;
 }
-.section { flex: 0 0 auto; }
-.section-title { position: relative; height: 5.1mm; border-bottom: .265mm solid var(--blue); color: var(--blue); font-size: 10.4pt; font-weight: 700; line-height: 4.5mm; }
 .section-body { padding-top: 1.1mm; font-size: var(--body-size); line-height: var(--body-leading); }
 .row-head { display: grid; grid-template-columns: 1fr 38mm; align-items: baseline; min-height: 3.55mm; }
 .row-head .left { min-width: 0; }
@@ -70,24 +75,26 @@ body {
 .skill-row:last-child { margin-bottom: 0; }
 .exp-item { margin-bottom: 1.35mm; }
 .exp-item.compact { margin-bottom: 1.0mm; }
+.exp-item .row-head,
+.exp-item .subrow,
+.exp-item .intro { break-after: avoid; page-break-after: avoid; }
+.exp-item > .bullets { break-before: avoid; page-break-before: avoid; }
 .bullets { margin: .25mm 0 0; padding: 0 0 0 4.6mm; }
-.bullets li { margin: 0 0 .55mm; padding-left: .55mm; }
+.bullets li { margin: 0 0 .55mm; padding-left: .55mm; break-inside: avoid; page-break-inside: avoid; }
 .bullets li::marker { font-size: 6.3pt; }
-.page2 { padding: 7.0mm var(--side) 0; font-size: 9pt; line-height: 1.08; }
-.page2 .continuation { margin: 0 0 3.0mm; }
-.page2 .section-title { margin: 0 0 1.2mm; height: 5.0mm; }
-.project { margin-bottom: 1.5mm; }
+.projects { font-size: 9pt; line-height: 1.08; }
+.projects .section-title { margin: 0 0 1.2mm; height: 5.0mm; }
+.project { margin-bottom: 1.5mm; break-inside: avoid; page-break-inside: avoid; }
 .project .row-head { grid-template-columns: 1fr 43mm; }
 .project-name { font-size: 9.25pt; }
-.page2 .date { font-size: 8.9pt; }
-.page2 .link-row, .page2 .stack-row, .page2 .intro { font-size: 8.9pt; }
-.page2 .bullets { font-size: 8.8pt; padding-left: 5.2mm; margin-top: .35mm; }
-.page2 .bullets li { margin-bottom: .45mm; }
+.projects .date { font-size: 8.9pt; }
+.projects .link-row, .projects .stack-row, .projects .intro { font-size: 8.9pt; }
+.projects .bullets { font-size: 8.8pt; padding-left: 5.2mm; margin-top: .35mm; }
+.projects .bullets li { margin-bottom: .45mm; }
 .layout-error { outline: 1px solid #f00 !important; }
 @media print {
   html, body { background: #fff; }
-  .pages { display: block; padding: 0; }
-  .page { break-after: page; page-break-after: always; }
-  .page:last-child { break-after: auto; page-break-after: auto; }
-  @page { size: A4; margin: 0; }
+  .resume-document { margin: 0; }
+  @page { size: A4; margin: 7mm 0 0; }
+  @page :first { margin-top: 0; }
 }

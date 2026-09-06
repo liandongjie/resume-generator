@@ -97,7 +97,6 @@ internships:
           - 参与环境社会风险分析 WebGIS 系统从需求梳理到功能交付；系统支持风险点、在线绘制、坐标、地址/POI、行政区及 Shapefile 6 类研究区输入，覆盖点、线、矩形、多边形 4 类几何对象。
           - 后端基于 GeoPandas、Rasterio、Shapely 实现缓冲区生成、栅格裁剪与自定义权重叠加，完成 12 项标准化环境、人口及社会指标综合风险计算，支持统计结果、GeoTIFF、Shapefile 及 ZIP 成果导出。
           - 实现缓冲区内 POI 关键词检索、地图标注及 CSV 导出，参与功能测试与系统交付，编写 30 页操作文档；项目后续取得软件著作权（登记号：2023SR0620877）。
-      page2BulletStart: 2
 projects:
     - name: OMMS 私募量化运维监控平台
       date: 2026年06月 - 2026年08月

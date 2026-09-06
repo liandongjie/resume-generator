@@ -28,8 +28,7 @@ const ExperienceSchema = z.strictObject({
   role: requiredString,
   city: requiredString.optional(),
   intro: requiredString.optional(),
-  bullets: z.array(requiredString),
-  page2BulletStart: z.number().int().nonnegative().optional()
+  bullets: z.array(requiredString)
 });
 
 const ProjectSchema = z.strictObject({

@@ -11,7 +11,7 @@ with sync_playwright() as pw:
     page=browser.new_page(viewport={"width":794,"height":1123})
     page.set_content(content, wait_until='load', timeout=60000)
     page.emulate_media(media='print'); page.wait_for_timeout(150)
-    result=page.evaluate('''() => ({errors:Number(document.body.dataset.layoutErrors||-1),issues:document.body.dataset.layoutIssueList||'',domPages:document.querySelectorAll('.page').length,page1:(()=>{const x=document.querySelector('.page1');const r=x.getBoundingClientRect();return {w:r.width,h:r.height}})()})''')
+    result=page.evaluate('''() => ({errors:Number(document.body.dataset.layoutErrors||-1),issues:document.body.dataset.layoutIssueList||'',sections:document.querySelectorAll('.resume-flow > .section').length,projects:document.querySelectorAll('.project').length})''')
     if result['errors']!=0:
         print(json.dumps(result,ensure_ascii=False)); browser.close(); raise SystemExit(2)
     page.pdf(path=str(out),format='A4',print_background=True,prefer_css_page_size=True,margin={"top":"0","right":"0","bottom":"0","left":"0"})

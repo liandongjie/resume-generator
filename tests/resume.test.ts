@@ -34,6 +34,13 @@ test('bullets must be string arrays', () => {
   assert.throws(() => parseResume(invalid), /internships\.0\.bullets/);
 });
 
+
+test('manual pagination metadata is rejected', () => {
+  const invalid: any = structuredClone(fixture);
+  invalid.internships[0].page2BulletStart = 1;
+  assert.throws(() => parseResume(invalid), /page2BulletStart|unrecognized/i);
+});
+
 test('inline emphasis is minimal and HTML-safe', () => {
   assert.equal(renderInline('Redis 缓存'), 'Redis 缓存');
   assert.equal(renderInline('使用 **Redis 缓存**'), '使用 <strong>Redis 缓存</strong>');

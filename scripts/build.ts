@@ -46,33 +46,14 @@ const education = data.education.map(e => `
 const skills = data.skills.map(s => `<p class="skill-row" data-guard="skill"><strong>${renderInline(s.label)}</strong>${renderInline(s.text)}</p>`).join('');
 
 const expHtml = data.internships.map((e, idx) => {
-  const page1End = Number.isInteger(e.page2BulletStart) ? e.page2BulletStart : undefined;
   return `<div class="exp-item ${idx>0?'compact':''}" data-guard="internship">
     <div class="row-head"><div class="company">${renderInline(e.company)}</div><div class="date">${renderInline(e.date)}</div></div>
     <div class="subrow"><div>${renderInline(e.role)}</div><div class="city">${renderInline(e.city || '')}</div></div>
     ${e.intro ? `<p class="intro">${renderInline(e.intro)}</p>` : ''}
-    ${bullets(e.bullets, 0, page1End)}
+    ${bullets(e.bullets)}
   </div>`;
 }).join('');
 
-const page1 = `<section class="page page1" data-page="1">
-  <div class="top-stripe"></div>
-  <header class="header">
-    <div class="name">${renderInline(p.name)}</div>
-    <div class="header-line contact">${renderInline(p.phone)}&nbsp;&nbsp;|&nbsp;&nbsp;${renderInline(p.email)}&nbsp;&nbsp;|&nbsp;&nbsp;${renderInline(p.city)}</div>
-    <div class="header-line portfolio">${renderInline(p.portfolio)}</div>
-    <div class="header-line address">${renderInline(p.address)}</div>
-    <div class="header-line status">${renderInline(p.status)}</div>
-    <img class="portrait" src="../${escapeHtml(p.portrait)}" alt="portrait" />
-  </header>
-  <main class="page1-content">
-    <section class="section education" data-guard="education-section"><div class="section-title">教育经历</div><div class="section-body">${education}</div></section>
-    <section class="section skills" data-guard="skills-section"><div class="section-title">专业技能</div><div class="section-body">${skills}</div></section>
-    <section class="section experience" data-guard="experience-section"><div class="section-title">实习经历</div><div class="section-body">${expHtml}</div></section>
-  </main>
-</section>`;
-
-const continuations = data.internships.flatMap(e => Number.isInteger(e.page2BulletStart) ? e.bullets.slice(e.page2BulletStart) : []);
 const projects = data.projects.map(proj => `<div class="project" data-guard="project">
   <div class="row-head"><div class="project-name">${renderInline(proj.name)}</div><div class="date">${renderInline(proj.date)}</div></div>
   ${proj.links.map(l => `<div class="link-row">${renderInline(l)}</div>`).join('')}
@@ -80,15 +61,30 @@ const projects = data.projects.map(proj => `<div class="project" data-guard="pro
   <div class="intro">${renderInline(proj.intro)}</div>
   ${bullets(proj.bullets)}
 </div>`).join('');
-const page2 = `<section class="page page2" data-page="2">
-  ${continuations.length ? `<div class="continuation">${bullets(continuations)}</div>` : ''}
-  <div class="section-title">项目经历</div>
-  ${projects}
-</section>`;
+
+const documentHtml = `<article class="resume-document">
+  <div class="first-page-header">
+    <div class="top-stripe"></div>
+    <header class="header">
+      <div class="name">${renderInline(p.name)}</div>
+      <div class="header-line contact">${renderInline(p.phone)}&nbsp;&nbsp;|&nbsp;&nbsp;${renderInline(p.email)}&nbsp;&nbsp;|&nbsp;&nbsp;${renderInline(p.city)}</div>
+      <div class="header-line portfolio">${renderInline(p.portfolio)}</div>
+      <div class="header-line address">${renderInline(p.address)}</div>
+      <div class="header-line status">${renderInline(p.status)}</div>
+      <img class="portrait" src="../${escapeHtml(p.portrait)}" alt="portrait" />
+    </header>
+  </div>
+  <main class="resume-flow">
+    <section class="section education" data-guard="education-section"><div class="section-title">教育经历</div><div class="section-body">${education}</div></section>
+    <section class="section skills" data-guard="skills-section"><div class="section-title">专业技能</div><div class="section-body">${skills}</div></section>
+    <section class="section experience" data-guard="experience-section"><div class="section-title">实习经历</div><div class="section-body">${expHtml}</div></section>
+    <section class="section projects" data-guard="projects-section"><div class="section-title">项目经历</div>${projects}</section>
+  </main>
+</article>`;
 
 const tpl = fs.readFileSync(TEMPLATE, 'utf8');
-if (!tpl.includes('{{TITLE}}') || !tpl.includes('{{PAGES}}')) throw new Error('HTML template is missing required placeholders');
-let html = tpl.replace('{{TITLE}}', `${escapeHtml(p.name)} - ${escapeHtml(data.meta.profile)}`).replace('{{PAGES}}', page1 + page2);
+if (!tpl.includes('{{TITLE}}') || !tpl.includes('{{DOCUMENT}}')) throw new Error('HTML template is missing required placeholders');
+let html = tpl.replace('{{TITLE}}', `${escapeHtml(p.name)} - ${escapeHtml(data.meta.profile)}`).replace('{{DOCUMENT}}', documentHtml);
 const css = fs.readFileSync(CSS,'utf8');
 const portraitBytes = fs.readFileSync(portraitPath);
 const portraitData = `data:image/png;base64,${portraitBytes.toString('base64')}`;
