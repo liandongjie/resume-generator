@@ -3,6 +3,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { escapeHtml, loadResume, renderInline } from './resume-schema.ts';
+import { resolvePythonCommand } from './python-runtime.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const { values } = parseArgs({ options: { input: { type: 'string' } } });
@@ -100,7 +101,8 @@ if (!pdf.startsWith(`${ROOT}${path.sep}`)) throw new Error(`RESUME_PDF must be i
 try { fs.unlinkSync(pdf); } catch (error: any) { if (error.code !== 'ENOENT') throw error; }
 let renderRaw = '';
 try {
-  renderRaw = execFileSync(process.env.PYTHON || 'python3', [RENDERER, htmlPath, pdf], { encoding:'utf8', env: { ...process.env, PYTHONUTF8: '1' }, maxBuffer:10*1024*1024 });
+  const python = resolvePythonCommand(ROOT);
+  renderRaw = execFileSync(python.executable, [...python.prefixArgs, RENDERER, htmlPath, pdf], { encoding:'utf8', env: { ...process.env, PYTHONUTF8: '1' }, maxBuffer:10*1024*1024 });
 } catch (e:any) {
   console.error(e.stdout?.toString?.() || e.message);
   process.exit(2);

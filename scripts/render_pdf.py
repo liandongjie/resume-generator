@@ -1,12 +1,13 @@
 from __future__ import annotations
-import json, os, re, subprocess, sys
+import json, re, subprocess, sys
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from playwright_runtime import chromium_launch_options
 if len(sys.argv)!=3: raise SystemExit('usage: render_pdf.py INPUT_HTML OUTPUT_PDF')
 html=Path(sys.argv[1]).resolve(); out=Path(sys.argv[2]).resolve(); out.parent.mkdir(parents=True,exist_ok=True)
 content=html.read_text(encoding='utf-8')
 with sync_playwright() as pw:
-    browser=pw.chromium.launch(headless=True, executable_path=os.environ.get('CHROMIUM_EXECUTABLE','/usr/bin/chromium'), args=['--no-sandbox','--disable-dev-shm-usage'])
+    browser=pw.chromium.launch(**chromium_launch_options())
     page=browser.new_page(viewport={"width":794,"height":1123})
     page.set_content(content, wait_until='load', timeout=60000)
     page.emulate_media(media='print'); page.wait_for_timeout(150)

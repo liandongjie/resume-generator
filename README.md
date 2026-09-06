@@ -37,7 +37,7 @@ For JD work, copy one Base into `tmp/`, edit only that temporary YAML, then run 
 
 Text fields in resume YAML support one safe inline emphasis form: `**text**`. It renders as `<strong>text</strong>` after HTML escaping; unclosed markers remain plain text and raw HTML is never interpreted.
 
-Runtime used for this validated foundation: Node 22 + the npm `yaml` and Zod packages for data loading/validation, plus Python 3, Playwright Chromium, and Poppler (`pdfinfo` and `pdftoppm`) for PDF rendering and visual checks. YAML parsing is handled entirely in Node. `PYTHON`, `CHROMIUM_EXECUTABLE`, and the project-local `RESUME_PDF` path may be overridden for PDF runtime differences; defaults remain `python3`, `/usr/bin/chromium`, and `output/resume-fintech.pdf`.
+Runtime used for this validated foundation: Node 22 + the npm `yaml` and Zod packages for data loading/validation, plus Python 3, Playwright Chromium, and Poppler (`pdfinfo` and `pdftoppm`) for PDF rendering and visual checks. YAML parsing is handled entirely in Node. Python callers resolve `PYTHON` first, then the project-local `.venv`, then platform launchers (`python` / `py -3` / `python3` on Windows; `python3` / `python` elsewhere). `CHROMIUM_EXECUTABLE` may override the browser; Linux keeps `/usr/bin/chromium` as the validated default, while Windows/macOS use Playwright-managed Chromium when no override is set. `RESUME_PDF` may still override the project-local output path.
 
 ## Phase 3 boundary
 
