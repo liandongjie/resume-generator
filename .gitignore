@@ -12,6 +12,7 @@ output/
 .env.*
 
 # Python cache
+.venv/
 __pycache__/
 *.pyc
 
