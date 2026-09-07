@@ -9,9 +9,10 @@ Phase 3 foundation for a locked WonderCV-style, JD-driven resume workflow.
 - `tmp/*.yaml`: disposable JD-specific working copies
 - `template/resume.html`: locked document structure
 - `styles/resume.css`: locked visual implementation of the approved Figma baseline
-- `assets/portrait.png`: local portrait asset
+- `assets/`: repository-local portrait and logo assets
+- `scripts/image-assets.ts`: guarded local-image resolver that emits self-contained Data URIs
 - `scripts/build.ts`: render + Chromium PDF + layout gate
-- `scripts/check-layout.ts`: independent overflow/overlap check
+- `scripts/check-layout.ts`: independent overflow/overlap and embedded-image check
 - `scripts/visual_check.py`: diagnostic visual comparison against the original page-1 reference
 - `output/`: generated deliverables
 
@@ -36,6 +37,8 @@ Without `--input`, schema/build/verify use `data/base-fintech.yaml`. Every selec
 For JD work, copy one Base into `tmp/`, edit only that temporary YAML, then run `generate`. Final PDFs are archived under `output/applications/`; an existing name receives `-02`, `-03`, and so on. Do not edit either Base directly during routine JD customization.
 
 Text fields in resume YAML support one safe inline emphasis form: `**text**`. It renders as `<strong>text</strong>` after HTML escaping; unclosed markers remain plain text and raw HTML is never interpreted.
+
+Profile images are configured by project-local paths. `profile.portrait` remains required for backward compatibility; `profile.headerLogo` is optional. PNG, JPEG, WebP, and SVG are resolved through the same local-image path, validated before rendering, and inlined into the generated HTML as Data URIs. Image files control content only; slot geometry stays in `styles/resume.css`, so changing a logo does not change pagination inputs.
 
 Runtime used for this validated foundation: Node 22 + the npm `yaml` and Zod packages for data loading/validation, plus Python 3, Playwright Chromium, and Poppler (`pdfinfo` and `pdftoppm`) for PDF rendering and visual checks. YAML parsing is handled entirely in Node. Python callers resolve `PYTHON` first, then the project-local `.venv`, then platform launchers (`python` / `py -3` / `python3` on Windows; `python3` / `python` elsewhere). `CHROMIUM_EXECUTABLE` may override the browser; Linux keeps `/usr/bin/chromium` as the validated default, while Windows/macOS use Playwright-managed Chromium when no override is set. `RESUME_PDF` may still override the project-local output path.
 
