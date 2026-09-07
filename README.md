@@ -22,7 +22,8 @@ Phase 3 foundation for a locked WonderCV-style, JD-driven resume workflow.
 npm test
 npm run schema:check
 npm run build:resume
-npm run check:layout
+npm run check:layout -- --html output/resume-fintech.html
+node --experimental-strip-types scripts/check-pagination.ts --html output/resume-fintech.html --pdf output/resume-fintech.pdf
 npm run design:check
 npm run repeatability:check
 npm run visual:check
@@ -32,7 +33,7 @@ npm run verify:resume -- --input tmp/20260905-招商银行-后端工程师.yaml
 npm run generate -- --input tmp/20260905-招商银行-后端工程师.yaml --company 招商银行 --role 后端工程师
 ```
 
-Without `--input`, schema/build/verify use `data/base-fintech.yaml`. Every selected input goes through the same schema, design, resource, layout, actual two-page PDF, repeatability, and diagnostic visual checks. Visual differences are reported but are not a hard pixel-diff gate.
+Without `--input`, schema/build/verify use `data/base-fintech.yaml`. Default build artifacts are named from `meta.profile`, so the fintech and full-stack Bases produce separate `resume-<profile>.pdf`, `resume-<profile>.html`, and `build-report-<profile>.json` files. Layout and pagination checks require explicit artifact paths. Every selected input goes through the same schema, design, resource, layout, actual two-page PDF, repeatability, and diagnostic visual checks. Visual differences are reported but are not a hard pixel-diff gate.
 
 For JD work, copy one Base into `tmp/`, edit only that temporary YAML, then run `generate`. Final PDFs are archived under `output/applications/`; an existing name receives `-02`, `-03`, and so on. Do not edit either Base directly during routine JD customization.
 

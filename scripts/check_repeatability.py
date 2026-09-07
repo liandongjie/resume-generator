@@ -4,7 +4,7 @@ from pathlib import Path
 
 if len(sys.argv) != 4: raise SystemExit('usage: check_repeatability.py FIRST_PDF SECOND_PDF REPORT_JSON')
 first,second,report_path=map(lambda value: Path(value).resolve(),sys.argv[1:])
-work=report_path.parents[1]/'tmp'/'repeatability'
+work=first.parent/'rendered'
 work.mkdir(parents=True,exist_ok=True)
 
 def render(pdf: Path, name: str) -> list[Path]:

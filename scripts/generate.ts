@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { loadResume } from './resume-schema.ts';
@@ -28,13 +29,18 @@ fs.mkdirSync(applications, { recursive: true });
 let output = path.join(applications, `${stem}.pdf`);
 for (let suffix = 2; fs.existsSync(output); suffix++) output = path.join(applications, `${stem}-${String(suffix).padStart(2, '0')}.pdf`);
 
-const staging = path.join(ROOT, 'tmp', `.generate-${process.pid}.pdf`);
+const stagingBase = path.join(ROOT, 'tmp', `.generate-${process.pid}-${randomUUID()}`);
+const staging = `${stagingBase}.pdf`;
+const stagingHtml = `${stagingBase}.html`;
+const stagingReport = `${stagingBase}.report.json`;
 try {
   execFileSync(process.execPath, ['--experimental-strip-types', path.join(ROOT, 'scripts', 'verify-resume.ts'), '--input', input], {
-    cwd: ROOT, env: { ...process.env, RESUME_PDF: staging }, stdio: 'inherit'
+    cwd: ROOT, env: { ...process.env, RESUME_PDF: staging, RESUME_HTML: stagingHtml, RESUME_REPORT: stagingReport }, stdio: 'inherit'
   });
   fs.copyFileSync(staging, output, fs.constants.COPYFILE_EXCL);
   console.log(`Generated: ${output}`);
 } finally {
-  try { fs.unlinkSync(staging); } catch (error: any) { if (error.code !== 'ENOENT') throw error; }
+  for (const file of [staging, stagingHtml, stagingReport]) {
+    try { fs.unlinkSync(file); } catch (error: any) { if (error.code !== 'ENOENT') throw error; }
+  }
 }

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<style>{{RESUME_CSS}}</style>
+<style>
+  .fixture-fill { height: 270mm; }
+</style>
+</head>
+<body>
+<article class="resume-document">
+  <main class="resume-flow">
+    <div class="fixture-fill"></div>
+    <section class="section projects">
+      <div class="section-title">Synthetic projects</div>
+      <div class="project">
+        <div class="row-head" data-page-token="PAGINATION_PROJECT_A" data-expected-page="1">
+          <div class="project-name">PAGINATION_PROJECT_A</div><div class="date">2026 - 2027</div>
+        </div>
+        <div class="link-row">Repository: https://example.com/project-a</div>
+        <div class="stack-row">Stack: TypeScript + Python + Chromium</div>
+        <div class="intro">Synthetic project used only to exercise a real print-fragmentation boundary.</div>
+        <ul class="bullets">
+          <li data-page-token="PAGINATION_BULLET_A1" data-expected-page="1">PAGINATION_BULLET_A1 First complete bullet stays with the project metadata and remains indivisible at the page boundary.</li>
+          <li data-page-token="PAGINATION_BULLET_A2" data-expected-page="2">PAGINATION_BULLET_A2 Second complete bullet moves to the following page without splitting across both pages.</li>
+          <li data-page-token="PAGINATION_BULLET_A3" data-expected-page="2">PAGINATION_BULLET_A3 Third complete bullet follows on the second page and remains an independent fragment.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</article>
+</body>
+</html>
