@@ -12,6 +12,7 @@ profile:
     address: 江苏省南京市栖霞区仙林大道163号南大仙林校区
     status: 应届毕业生 | 全栈开发
     portrait: assets/portrait.png
+    headerLogo: assets/logos/nju.svg
 
 education:
     - school: 南京大学

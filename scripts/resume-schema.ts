@@ -50,7 +50,8 @@ export const ResumeSchema = z.strictObject({
     portfolio: httpUrl,
     address: requiredString,
     status: requiredString,
-    portrait: requiredString
+    portrait: requiredString,
+    headerLogo: requiredString.optional()
   }),
   education: z.array(EducationSchema).min(1),
   skills: z.array(SkillSchema).min(1),

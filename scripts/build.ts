@@ -3,6 +3,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { parseArgs } from 'node:util';
 import { escapeHtml, loadResume, renderInline } from './resume-schema.ts';
+import { resolveLocalImage } from './image-assets.ts';
 import { resolvePythonCommand } from './python-runtime.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -31,9 +32,8 @@ requireFile(CSS, 'stylesheet');
 requireFile(RENDERER, 'PDF renderer');
 const data = loadResume(DATA);
 const p = data.profile;
-const portraitPath = path.resolve(ROOT, p.portrait);
-if (!portraitPath.startsWith(`${ROOT}${path.sep}`)) throw new Error(`Portrait must be inside the project: ${p.portrait}`);
-requireFile(portraitPath, 'portrait');
+const portraitData = resolveLocalImage(ROOT, p.portrait, 'portrait');
+const headerLogoData = p.headerLogo ? resolveLocalImage(ROOT, p.headerLogo, 'header logo') : null;
 fs.mkdirSync(OUT, { recursive: true });
 fs.mkdirSync(TMP, { recursive: true });
 
@@ -66,12 +66,13 @@ const documentHtml = `<article class="resume-document">
   <div class="first-page-header">
     <div class="top-stripe"></div>
     <header class="header">
+      ${headerLogoData ? `<img class="header-logo" data-guard="header-logo" src="${headerLogoData}" alt="" />` : ''}
       <div class="name">${renderInline(p.name)}</div>
       <div class="header-line contact">${renderInline(p.phone)}&nbsp;&nbsp;|&nbsp;&nbsp;${renderInline(p.email)}&nbsp;&nbsp;|&nbsp;&nbsp;${renderInline(p.city)}</div>
       <div class="header-line portfolio">${renderInline(p.portfolio)}</div>
       <div class="header-line address">${renderInline(p.address)}</div>
       <div class="header-line status">${renderInline(p.status)}</div>
-      <img class="portrait" src="../${escapeHtml(p.portrait)}" alt="portrait" />
+      <img class="portrait" src="${portraitData}" alt="portrait" />
     </header>
   </div>
   <main class="resume-flow">
@@ -86,9 +87,7 @@ const tpl = fs.readFileSync(TEMPLATE, 'utf8');
 if (!tpl.includes('{{TITLE}}') || !tpl.includes('{{DOCUMENT}}')) throw new Error('HTML template is missing required placeholders');
 let html = tpl.replace('{{TITLE}}', `${escapeHtml(p.name)} - ${escapeHtml(data.meta.profile)}`).replace('{{DOCUMENT}}', documentHtml);
 const css = fs.readFileSync(CSS,'utf8');
-const portraitBytes = fs.readFileSync(portraitPath);
-const portraitData = `data:image/png;base64,${portraitBytes.toString('base64')}`;
-html = html.replace('<link rel="stylesheet" href="../styles/resume.css" />', `<style>${css}</style>`).replaceAll(`src="../${escapeHtml(p.portrait)}"`, `src="${portraitData}"`);
+html = html.replace('<link rel="stylesheet" href="../styles/resume.css" />', `<style>${css}</style>`);
 const htmlPath = path.join(TMP, 'resume.html');
 fs.writeFileSync(htmlPath, html);
 
