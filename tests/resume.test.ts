@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
+import { resolveLocalImage } from '../scripts/image-assets.ts';
 import { loadResume, parseResume, renderInline } from '../scripts/resume-schema.ts';
 
 const fixture = {
@@ -22,6 +25,13 @@ test('base resumes pass ResumeSchema', () => {
   }
 });
 
+test('headerLogo is optional and accepted when configured', () => {
+  assert.equal(parseResume(structuredClone(fixture)).profile.headerLogo, undefined);
+  const configured: any = structuredClone(fixture);
+  configured.profile.headerLogo = 'assets/logos/nju.svg';
+  assert.equal(parseResume(configured).profile.headerLogo, 'assets/logos/nju.svg');
+});
+
 test('missing required field reports its path', () => {
   const invalid: any = structuredClone(fixture);
   delete invalid.profile.email;
@@ -34,11 +44,36 @@ test('bullets must be string arrays', () => {
   assert.throws(() => parseResume(invalid), /internships\.0\.bullets/);
 });
 
-
 test('manual pagination metadata is rejected', () => {
   const invalid: any = structuredClone(fixture);
   invalid.internships[0].page2BulletStart = 1;
   assert.throws(() => parseResume(invalid), /page2BulletStart|unrecognized/i);
+});
+
+test('local image resolver inlines supported project images and rejects invalid sources', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'resume-image-assets-'));
+  try {
+    const assets = path.join(root, 'assets');
+    fs.mkdirSync(assets, { recursive: true });
+    const formats = [
+      ['png', 'image/png'],
+      ['jpg', 'image/jpeg'],
+      ['jpeg', 'image/jpeg'],
+      ['webp', 'image/webp'],
+      ['svg', 'image/svg+xml']
+    ];
+    for (const [extension, mime] of formats) {
+      const file = path.join(assets, `sample.${extension}`);
+      fs.writeFileSync(file, extension === 'svg' ? '<svg xmlns="http://www.w3.org/2000/svg" />' : Buffer.from([0, 1, 2, 3]));
+      assert.ok(resolveLocalImage(root, `assets/sample.${extension}`).startsWith(`data:${mime};base64,`));
+    }
+    assert.throws(() => resolveLocalImage(root, '../outside.png'), /inside the project/);
+    assert.throws(() => resolveLocalImage(root, 'assets/missing.png'), /Missing required image/);
+    fs.writeFileSync(path.join(assets, 'sample.gif'), Buffer.from([0]));
+    assert.throws(() => resolveLocalImage(root, 'assets/sample.gif'), /Unsupported image format/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });
 
 test('inline emphasis is minimal and HTML-safe', () => {

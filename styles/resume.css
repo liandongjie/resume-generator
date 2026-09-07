@@ -29,6 +29,7 @@ body {
 }
 .top-stripe { position: absolute; inset: 0 0 auto 0; height: 4.23mm; background: var(--blue); }
 .header { position: absolute; inset: 0; }
+.header-logo { position: absolute; left: var(--side); top: 6.86mm; width: 10.48mm; height: 12.83mm; object-fit: contain; }
 .name { position: absolute; top: 34.38pt; left: 0; width: 100%; text-align: center; font-size: 15pt; line-height: 1; font-weight: 700; }
 .header-line { position: absolute; left: 41mm; width: 116mm; text-align: center; font-size: 9pt; line-height: 1; white-space: nowrap; }
 .header-line.contact { top: 57.98pt; }
@@ -84,7 +85,12 @@ body {
 .bullets li::marker { font-size: 6.3pt; }
 .projects { font-size: 9pt; line-height: 1.08; }
 .projects .section-title { margin: 0 0 1.2mm; height: 5.0mm; }
-.project { margin-bottom: 1.5mm; break-inside: avoid; page-break-inside: avoid; }
+.project { margin-bottom: 1.5mm; break-inside: auto; page-break-inside: auto; }
+.project .row-head,
+.project .link-row,
+.project .stack-row,
+.project .intro { break-after: avoid; page-break-after: avoid; }
+.project > .bullets { break-before: avoid; page-break-before: avoid; }
 .project .row-head { grid-template-columns: 1fr 43mm; }
 .project-name { font-size: 9.25pt; }
 .projects .date { font-size: 8.9pt; }

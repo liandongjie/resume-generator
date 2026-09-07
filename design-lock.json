@@ -3,6 +3,6 @@
   "algorithm": "sha256",
   "files": {
     "template/resume.html": "e4ddc0eefd380dbf981038767063fe31c976fd5a51f63b48cce179456c0ec529",
-    "styles/resume.css": "5bd6952f1aca289fa10a35c15dd8c455f265c1a10c76290fbcf1efa571b0a515"
+    "styles/resume.css": "64afa6cf26c2af032b1a90c3a37cc917c1800238be7f0670728e6c8af0a61422"
   }
 }
