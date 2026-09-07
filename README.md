@@ -2,7 +2,7 @@
 
 > 面向 JD 定制场景的可验证、可复现简历生成系统。
 
-Resume Generator 使用结构化 YAML 管理简历内容，通过 Zod 做严格数据校验，在 Node.js 中生成自包含 HTML，再交给 Playwright Chromium 渲染为两页 A4 PDF。生成过程同时经过设计锁、布局检查、真实分页行为回归、像素级重复性检查和视觉对照，目标不是“把内容导出成 PDF”，而是让每一次简历生成都具备明确输入、稳定输出和可验证结果。
+Resume Generator 使用结构化 YAML 管理简历内容，通过 Zod 做严格数据校验，在 Node.js 中生成自包含 HTML，再交给 Playwright Chromium 渲染为两页 A4 PDF。生成过程同时经过设计锁、布局检查、真实分页行为回归、像素级重复性检查和视觉对照，目标不是简单“把内容导出成 PDF”，而是**让每一次简历生成都具备明确输入、稳定输出和可验证结果**。
 
 ## 为什么做这个项目
 
@@ -198,7 +198,7 @@ output/resume-fullstack.pdf
 
 ```yaml
 profile:
-  name: 连冬杰
+  name: LIANDONGJIE
   portrait: assets/portrait.png
   headerLogo: assets/logos/nju.svg
 ```
