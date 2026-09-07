@@ -65,7 +65,7 @@ test('local image resolver inlines supported project images and rejects invalid 
     for (const [extension, mime] of formats) {
       const file = path.join(assets, `sample.${extension}`);
       fs.writeFileSync(file, extension === 'svg' ? '<svg xmlns="http://www.w3.org/2000/svg" />' : Buffer.from([0, 1, 2, 3]));
-      assert.match(resolveLocalImage(root, `assets/sample.${extension}`), new RegExp(`^data:${mime};base64,`));
+      assert.ok(resolveLocalImage(root, `assets/sample.${extension}`).startsWith(`data:${mime};base64,`));
     }
     assert.throws(() => resolveLocalImage(root, '../outside.png'), /inside the project/);
     assert.throws(() => resolveLocalImage(root, 'assets/missing.png'), /Missing required image/);
